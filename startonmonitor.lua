@@ -7,12 +7,15 @@ WAIT_FOR_REDSTONE = true -- If enabled the monitor will wait for an redstone sig
 
 local monitor = peripheral.wrap(MONITOR_SIDE)
 monitor.setTextScale(FONT_SIZE)
+monitor.clear()
 
 if WAIT_FOR_REDSTONE then
     while true do
         os.pullEvent("redstone")
         shell.run("monitor", MONITOR_SIDE, SCRIPT_TO_START)
+        monitor.clear()
     end
 else
     shell.run("monitor", MONITOR_SIDE, SCRIPT_TO_START)
+    monitor.clear()
 end
