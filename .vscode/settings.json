@@ -7,6 +7,7 @@
         "fs",
         "sleep",
         "read",
-        "parallel"
+        "parallel",
+        "peripheral"
     ]
 }
