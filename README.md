@@ -4,11 +4,13 @@ This repository contains most of my used lua scripts for [CC:Tweaked](https://tw
 
 ## Install
 
-They can be installed with following command on any computer or turtle.
-Maybe some of them have special requirements you need to find out.s
+They can be installed with the wget command and the raw file contents of the files here.
+For an easier way there is also an installer, which allows to install any script of the repository.
+
+To execute it, use following line:
 
 ```shell
-wget https://raw.githubusercontent.com/Poeschl/computercraft-scripts/main/<scriptname> <localfilename>
+wget run https://raw.githubusercontent.com/Poeschl/computercraft-scripts/main/installer.lua
 ```
 
 ## External scripts
