@@ -9,6 +9,7 @@
         "read",
         "parallel",
         "peripheral",
-        "http"
+        "http",
+        "redstone"
     ]
 }
