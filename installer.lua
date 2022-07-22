@@ -8,6 +8,7 @@ local function ends_with(str, ending)
 
 ----------------- Main function
 
+print(" ")
 print("Poeschl CC Scripts Installer")
 
 local githubFilesString = http.get(GITHUB_REPRO_LINK).readAll()
@@ -27,11 +28,13 @@ end
 print("Available Scripts (type number to download):")
 local options = {}
 for index, script in ipairs(availableFiles) do
-    print(index .. ')' .. script['name'])
+    print(index .. ') ' .. script['name'])
     table.insert(options, index)
 end
 
-local downloadIndex = read(nil, options)
-shell.run("wget", availableFiles[downloadIndex]['download_url'], availableFiles[downloadIndex]['name'])
+local downloadIndex = tonumber(read(nil, options))
 
-print ("Script " .. availableFiles[downloadIndex]['name'] .. "downloaded")
+local selectedScript = availableFiles[downloadIndex]
+
+shell.run("wget",selectedScript['url'], selectedScript['name'])
+print ("Script " .. selectedScript['name'] .. " downloaded")
