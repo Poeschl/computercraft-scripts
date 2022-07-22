@@ -2,7 +2,8 @@
 
 REDSTONE_SIDE = "right"
 PLAYER_DETECTOR_SIDE = "left"
-RANGE = 3
+RANGE_DAY = 3
+RANGE_NIGHT = 2
 KNOWN_PLAYERS = {"Poeschl"}
 
 local playerDetector = peripheral.find("playerDetector")
@@ -11,9 +12,9 @@ local function sendRedstone(on)
     redstone.setOutput(REDSTONE_SIDE, on)
 end
 
-local function isKnownPlayerInRange()
+local function isKnownPlayerInRange(range)
     for index, username in ipairs(KNOWN_PLAYERS) do
-        if playerDetector.isPlayerInRange(RANGE, username) then
+        if playerDetector.isPlayerInRange(range, username) then
             print("Player '" .. username .. "' detected")
             return true
         end
@@ -21,9 +22,18 @@ local function isKnownPlayerInRange()
     return false
 end
 
+local function isDay()
+    local time = os.time()
+    return time > 6000 and time < 18000
+end
+
 print("Start player detection loop")
 
 while true do
-    sendRedstone(isKnownPlayerInRange())
+    if isDay() then
+        sendRedstone(isKnownPlayerInRange(RANGE_DAY))
+    else
+        sendRedstone(isKnownPlayerInRange(RANGE_NIGHT))
+    end
     sleep(0.2)
 end
