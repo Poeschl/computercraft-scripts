@@ -6,7 +6,9 @@
 BATTERY = peripheral.find("mekanism:ultimate_energy_cube")
 LAST_PERCENTAGE = 0
 CHARGE_THRESHOLD = 0.6
+CHARGE_OUTPUT_SIDE = 'left'
 ALARM_THRESHOLD = 0.3
+ALARM_OUTPUT_SIDE = 'top'
 
 local function display_external(current, trend)
   local monitor = peripheral.find("monitor")
@@ -50,8 +52,8 @@ while true do
   display_external(rounded_current,  rounded_trend)
   display(rounded_current,  rounded_trend)
 
-  redstone.setOutput("left", batteryPercentage >= CHARGE_THRESHOLD)
-  redstone.setOutput("top", batteryPercentage >= ALARM_THRESHOLD)
+  redstone.setOutput(CHARGE_OUTPUT_SIDE, batteryPercentage >= CHARGE_THRESHOLD)
+  redstone.setOutput(ALARM_OUTPUT_SIDE, batteryPercentage >= ALARM_THRESHOLD)
 
   sleep(5)
   LAST_PERCENTAGE = batteryPercentage
