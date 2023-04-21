@@ -11,6 +11,7 @@ ALARM_THRESHOLD = 0.3
 ALARM_OUTPUT_SIDE = 'top'
 ALARM_INVERT_OUTPUT = false
 PRECISION_DISPLAYED = 3
+UPDATE_INTERVAL_SEC = 2
 
 LAST_PERCENTAGE = 0
 
@@ -33,11 +34,19 @@ local function display_external(current, trend)
     local monitor_size = monitor.getSize()
     
     -- Switch between big and small infos
-    if monitor_size < 20 then
-      if monitor_size <= 7 then
-        monitor.setTextScale(0.5)
-      end
+    if monitor_size <= 7 then
+      monitor.setTextScale(0.5)
+      monitor.setCursorPos(1,1)
+      monitor.write("Current:")
+      monitor.setCursorPos(1,2)
+      monitor.write(current .. "%")
+      monitor.setCursorPos(1,3)
+      monitor.write("Trend:")
+      monitor.setCursorPos(1,4)
+      monitor.write(trend .. "%")
 
+
+    elseif monitor_size <= 14 then
       monitor.setCursorPos(1,1)
       monitor.write("Current: " .. current .. "%")
       monitor.setCursorPos(1,2)
@@ -86,6 +95,6 @@ while true do
     redstone.setOutput(ALARM_OUTPUT_SIDE, batteryPercentage < ALARM_THRESHOLD)
   end
 
-  sleep(1)
+  sleep(UPDATE_INTERVAL_SEC)
   LAST_PERCENTAGE = batteryPercentage
 end
