@@ -11,6 +11,7 @@ monitor.clear()
 
 if WAIT_FOR_REDSTONE then
     while true do
+        ---@diagnostic disable-next-line: undefined-field
         os.pullEvent("redstone")
         shell.run("monitor", MONITOR_SIDE, SCRIPT_TO_START)
         monitor.clear()

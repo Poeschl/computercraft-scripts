@@ -10,6 +10,7 @@
         "parallel",
         "peripheral",
         "http",
-        "redstone"
+        "redstone",
+        "colors"
     ]
 }
