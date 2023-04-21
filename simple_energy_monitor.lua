@@ -61,11 +61,17 @@ local function display_external(current, trend)
   end
 end
 
-local function display(current, trend)
+local function display(current, trend, max_hint)
   term.clear()
   term.setCursorPos(1,1)
   print("Current percentage: " .. current .. "%")
   print("Trend: " .. trend .. "%")
+
+  if max_hint then
+    print()
+    print("The max energy capacity is MAX_INT!")
+    print("There might be more energy left as it can be displayed")
+  end
 end
 
 local function round(num, numDecimalPlaces)
@@ -81,7 +87,7 @@ while true do
   local rounded_trend = round(trend * 100, PRECISION_DISPLAYED)
 
   display_external(rounded_current,  rounded_trend)
-  display(rounded_current,  rounded_trend)
+  display(rounded_current,  rounded_trend, BATTERY.getEnergyCapacity() == 2147483647)
 
   if CHARGE_INVERT_OUTPUT then
     redstone.setOutput(CHARGE_OUTPUT_SIDE, batteryPercentage >= CHARGE_THRESHOLD)
@@ -97,4 +103,3 @@ while true do
 
   sleep(UPDATE_INTERVAL_SEC)
   LAST_PERCENTAGE = batteryPercentage
-end
