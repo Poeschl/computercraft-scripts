@@ -18,6 +18,18 @@ UPDATE_INTERVAL_SEC = 2
 
 LAST_PERCENTAGE = 0
 
+local function blank_external_monitors() 
+  local monitors = { peripheral.find("monitor") }
+
+  for _, monitor in pairs(monitors) do
+    monitor.setTextColor(colors.white)
+    monitor.setBackgroundColour(colors.blue)
+    monitor.clear()
+    monitor.setCursorPos(1, 1)
+    monitor.write("Error")
+  end
+end
+
 local function display_external(current, trend)
   local monitors = { peripheral.find("monitor") }
 
@@ -96,7 +108,8 @@ end
 -- Check for connection (for example on server startup)
 BATTERY = wait_for_battery()
 
-while true do
+running = true
+while running do
   try {
     function()
       local batteryPercentage = BATTERY.getEnergy() / BATTERY.getEnergyCapacity()
@@ -126,8 +139,22 @@ while true do
     end,
     catch {
       function(error)
-        print("Detected error: Wait for battery reconnect")
-        BATTERY = wait_for_battery()
+        blank_external_monitors()
+        print("Detected error: Wait for input")
+        print("r -> restart")
+        print("q -> quit")
+        local valid_input = false
+        while not valid_input do
+          local _,key = os.pullEvent("key")
+
+          if key == keys.q then
+            valid_input = true
+            running = false
+          elseif key == keys.r then
+            valid_input = true
+            BATTERY = wait_for_battery()
+          end
+        end
       end
     }
   }
