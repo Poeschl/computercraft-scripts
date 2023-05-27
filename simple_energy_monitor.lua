@@ -25,8 +25,10 @@ local function blank_external_monitors()
     monitor.setTextColor(colors.white)
     monitor.setBackgroundColour(colors.blue)
     monitor.clear()
-    monitor.setCursorPos(1, 1)
+    monitor.setCursorPos(2, 2)
     monitor.write("Error")
+    monitor.setCursorPos(2, 4)
+    monitor.write("X_x")
   end
 end
 
@@ -140,7 +142,9 @@ while running do
     catch {
       function(error)
         blank_external_monitors()
-        print("Detected error: Wait for input")
+        print("Detected error:")
+        print(error)
+        print()
         print("r -> restart")
         print("q -> quit")
         local valid_input = false
